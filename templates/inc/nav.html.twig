@@ -1,6 +1,8 @@
 <nav>
     <ul>
-        <li><a href="/" title="home">Home</a></li>
-        <li><a href="/test" title="Test">Test</a></li>
+        <li><a href="{{ path('main_home') }}" title="home">Home</a></li>
+        <li><a href="{{ path('main_test') }}" title="Test">Test</a></li>
+        <li><a href="{{ path('series_list') }}" title="All series">Series</a></li>
+        <li><a href="{{ path('series_create') }}" title="Create new serie">Create</a></li>
     </ul>
 </nav>
