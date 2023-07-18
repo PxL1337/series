@@ -45,5 +45,30 @@ nav ul {
 }
 
 nav li {
+    font-size: 2em ;
     margin-right: 1rem;
+}
+
+.series-list {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.serie-infos {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.genres-dates {
+    display: flex;
+    justify-content: space-between;
+}
+
+.popularity {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 50px;
 }

@@ -1,12 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block body %}
-    Todo : Afficher le détail de la série | {{ parent() }}
-{% endblock %}
-
 {% block title %}
-    <h2>Todo : Le titre de la série</h2>
-
-    {# Afficher toutes les infos de la série #}
+    {{ serie.name }} | {{ parent() }}
 {% endblock %}
+
+{% block body %}
+    <section class="serie-details">
+        <section class="title-image">
+            <h2>{{ serie.name }}</h2>
+            <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
+        </section>
+        <section class="serie-infos">
+            <div class="genres-dates">
+                <span class="genre">Genre : {{ serie.genres }}</span>
+                <span class="Releasedate">Release Date : {{ serie.firstAirDate | date('d-m-Y') }}</span>
+                <span class="lastAirDate">Last Air Date : {{ serie.lastAirDate | date('d-m-Y') }}</span>
+                <span class="status">Status : {{ serie.status }}</span>
+            </div>
+            <div class="overview">
+                <p>Resume :</p>
+                <p>{{ serie.overview }}</p>
+            </div>
+            <div class="popularity">
+                <p>Note : {{ serie.vote }}</p>
+                <p>Popularity : {{ serie.popularity }}</p>
+            </div>
+        </section>
+    </section>
+{% endblock %}
+
+
 
