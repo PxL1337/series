@@ -1,8 +1,7 @@
 body {
-    background: linear-gradient(#000000, #132135);
-    background-attachment: fixed;
+    background: linear-gradient(#000000, #132135) fixed;
     color: #EEE;
-    font-family: 'Nabla', serif;
+    font-family: 'Tektur', cursive;
 }
 
 .container {
@@ -17,7 +16,7 @@ a {
 }
 
 a:hover {
-    color: #BC956B;
+    color: rgba(255,255,255,0.3);
 }
 
 img {
@@ -30,14 +29,29 @@ body > .container {
     min-height: 100vh;
 }
 
+
+/* Header */
+header {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    border-bottom: 2px solid #B0413E;
+    margin-bottom: 30px;
+}
+
 header img {
-    height: 70px;
+    height: 50px;
 }
 
 main {
     flex: 1;
 }
 
+main h3{
+    color: rgba(174, 0, 0, 0.9);
+}
+
+/* NAV */
 nav ul {
     display: flex;
     list-style: none;
@@ -49,26 +63,96 @@ nav li {
     margin-right: 1rem;
 }
 
+/* Series Details */
+.serie-details {
+    display: flex;
+    justify-content: space-between;
+}
+
 .series-list {
     display: grid;
-    grid-gap: 10px;
+    grid-gap: 25px;
     grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.series-list article {
+    transition: transform 0.3s ease;
+    z-index: 1;
 }
 
 .serie-infos {
     display: flex;
     flex-direction: column;
+    width: 50%;
     gap: 20px;
     margin-top: 20px;
 }
 
 .genres-dates {
     display: flex;
+    flex-direction: column;
+    gap: 30px;
     justify-content: space-between;
+}
+
+.serie-note {
+    margin-top: 40px;
 }
 
 .popularity {
     display: flex;
     justify-content: space-evenly;
-    gap: 50px;
+    align-items: center;
+    gap: 20px;
+}
+
+.popularity h3 {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+
+/* Form */
+form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+form #serie {
+    width: 80%;
+    align-items: center;
+}
+
+#serie div {
+    margin-bottom: 1rem;
+    box-sizing: border-box;
+}
+
+label {
+    display: block;
+    margin-bottom: 2px;
+}
+
+input, textarea, select {
+    box-sizing: content-box;
+    width: 100%;
+    border-radius: 10px;
+}
+
+/* Footer */
+
+footer {
+    display: flex;
+    height: 60px;
+    margin-top: 20px;
+    justify-content: center;
+    align-items: flex-end;
+    border-top: 2px solid #B0413E;
+    box-shadow: #132135;
+}
+
+footer .copyright {
+    margin-top: auto;
 }

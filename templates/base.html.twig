@@ -11,7 +11,7 @@
     <link rel="icon" href="{{ asset('img/icon.png') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nabla&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Agdasima&family=Nabla&family=Tektur&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="container">
@@ -25,9 +25,13 @@
         </main>
 
         <footer>
-            {% include('inc/nav.html.twig') %}
-            <div>&copy; {{ "now"|date("Y") }} Series !</div>
+            <div class="copyright">&copy; {{ "now"|date("Y") }} PixDev | <a href="https://www.eni-ecole.fr/">@ENI-Ecole Informatique</a> |
+                <a href="https://github.com/PxL1337/series" target="_blank"><i class="fa-brands fa-github"></i></a></div>
         </footer>
     </div>
+    <script src="https://kit.fontawesome.com/bd77a4e8ae.js" crossorigin="anonymous"></script>
+    {% block javascripts %}
+        <script src="{{ asset('js/zoom.js') }}"></script>
+    {% endblock %}
 </body>
 </html>

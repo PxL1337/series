@@ -5,27 +5,28 @@
 {% endblock %}
 
 {% block body %}
+    <h2>{{ serie.name }}</h2>
     <section class="serie-details">
         <section class="title-image">
-            <h2>{{ serie.name }}</h2>
             <img src="{{ asset('img/posters/series/' ~ serie.poster) }}" alt="{{ serie.name }}">
         </section>
         <section class="serie-infos">
             <div class="genres-dates">
-                <span class="genre">Genre : {{ serie.genres }}</span>
-                <span class="Releasedate">Release Date : {{ serie.firstAirDate | date('d-m-Y') }}</span>
-                <span class="lastAirDate">Last Air Date : {{ serie.lastAirDate | date('d-m-Y') }}</span>
-                <span class="status">Status : {{ serie.status }}</span>
+                <span class="genre"><h3>Genre</h3> {{ serie.genres }}</span>
+                <span class="Releasedate"><h3>Release Date</h3> {{ serie.firstAirDate | date('d-m-Y') }}</span>
+                <span class="status"><h3>Status</h3> {{ serie.status }}</span>
             </div>
             <div class="overview">
-                <p>Resume :</p>
+                <h3>Resume</h3>
                 <p>{{ serie.overview }}</p>
             </div>
-            <div class="popularity">
-                <p>Note : {{ serie.vote }}</p>
-                <p>Popularity : {{ serie.popularity }}</p>
-            </div>
         </section>
+    </section>
+    <section class="serie-note">
+        <div class="popularity">
+            <div><h3>Note</h3> {{ serie.vote }}</div>
+            <div><h3>Popularity</h3> {{ serie.popularity }}</div>
+        </div>
     </section>
 {% endblock %}
 

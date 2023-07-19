@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Serie;
+use App\Form\SerieType;
 use App\Repository\SerieRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
@@ -19,7 +20,7 @@ class SerieController extends AbstractController
     {
         /*$series = $serieRepository->findAll();*/
 
-        $series = $serieRepository->findBy([], ['popularity' => 'DESC', 'vote' => 'DESC'], 30, 0);
+        $series = $serieRepository->findBestSeries();
 
         return $this->render('series/list.html.twig', [
             'series' => $series,
@@ -39,9 +40,13 @@ class SerieController extends AbstractController
     #[Route('/create', name: 'create')]
     public function create(): Response
     {
-        //todo: récupérer les détails d'une série depuis la BDD
+        $serie = new Serie();
+        $serieForm = $this->createForm(SerieType::class, $serie);
+
+        //traiter le formulaire
 
         return $this->render('series/create.html.twig', [
+            'serieForm' => $serieForm->createView()
         ]);
     }
 
