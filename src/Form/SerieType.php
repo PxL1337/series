@@ -11,6 +11,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints as Assert;
 
 class SerieType extends AbstractType
 {
@@ -20,7 +21,7 @@ class SerieType extends AbstractType
             ->add('name', TextType::class, [
                 'label' => 'Title'
             ])
-        ->add('overview', null, [
+        ->add('overview', TextareaType::class, [
             'required' => false,
         ])
             ->add('status', ChoiceType::class, [
@@ -39,13 +40,43 @@ class SerieType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('lastAirDate')
-            ->add('backdropFile', FileType::class, [
-                'required' => false,
-                'mapped' => false,
-            ])
             ->add('posterFile', FileType::class, [
                 'required' => false,
                 'mapped' => false,
+                'constraints' => [
+                    new Assert\Image([
+                        'maxSize' => '256k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file (jpg, png, gif).',
+                    ]),
+                    new Assert\NotNull([
+                        'message' => 'Please upload a poster file.',
+                        'groups' => ['creation'],
+                    ]),
+                ],
+            ])
+            ->add('backdropFile', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+                'constraints' => [
+                    new Assert\Image([
+                        'maxSize' => '256k',
+                        'mimeTypes' => [
+                            'image/jpeg',
+                            'image/png',
+                            'image/gif',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid image file (jpg, png, gif).',
+                    ]),
+                    new Assert\NotNull([
+                        'message' => 'Please upload a backdrop file.',
+                        'groups' => ['creation'],
+                    ]),
+                ],
             ])
             ->add('tmdbId')
         ;
@@ -55,6 +86,7 @@ class SerieType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Serie::class,
+            'validation_groups' => ['Default', 'creation'],
         ]);
     }
 }

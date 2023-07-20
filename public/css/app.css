@@ -153,6 +153,13 @@ form #serie {
     box-sizing: border-box;
 }
 
+#serie li {
+    list-style: none;
+    padding-left: 10px;
+    border-radius: 10px;
+    background-color: #B0413E;
+}
+
 label {
     display: block;
     margin-bottom: 2px;

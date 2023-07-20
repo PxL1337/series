@@ -10,7 +10,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         setTimeout(function() {
             zoomable.style.opacity = '1';
             zoomable.style.transform = 'translateY(0)';
-        }, i * 100);
+        }, i * 50);
 
         // Add zoom effect when image is hovered over
         zoomable.addEventListener('mouseover', function() {

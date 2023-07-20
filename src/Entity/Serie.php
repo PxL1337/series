@@ -6,6 +6,8 @@ use App\Repository\SerieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[ORM\Entity(repositoryClass: SerieRepository::class)]
 class Serie
@@ -15,36 +17,51 @@ class Serie
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Please provide a title for the serie !')]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[Assert\NotBlank(message: 'Please provide an overview for the serie !')]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $overview = null;
 
+    #[Assert\Choice(choices: ['Cancelled', 'Returning', 'Ended'])]
+    #[Assert\Length(max: 50)]
     #[ORM\Column(length: 50)]
     private ?string $status = null;
 
+    #[Assert\NotBlank(message: 'Please provide a Note for the serie !')]
+    #[Assert\Range(notInRangeMessage: 'You are not in range Dude !', min: 0, max: 10)]
     #[ORM\Column(type: Types::DECIMAL, precision: 3, scale: 1)]
     private ?string $vote = null;
 
+    #[Assert\NotBlank(message: 'Please provide a Popularity Score for the serie !')]
     #[ORM\Column(type: Types::DECIMAL, precision: 6, scale: 2)]
     private ?string $popularity = null;
 
+    #[Assert\NotBlank(message: 'Please provide a genre for the serie !')]
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $genres = null;
 
+    #[Assert\NotBlank(message: 'Please provide a first air date for the serie !')]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $firstAirDate = null;
 
+    #[Assert\GreaterThanOrEqual(propertyPath: 'firstAirDate',message: 'The last air date must be after the first air date')]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $lastAirDate = null;
 
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $backdrop = null;
 
+    #[Assert\Length(max: 255)]
     #[ORM\Column(length: 255)]
     private ?string $poster = null;
 
+    #[Assert\NotBlank(message: 'Please provide the tmdb ID for the serie !')]
     #[ORM\Column]
     private ?int $tmdbId = null;
 
@@ -55,6 +72,7 @@ class Serie
     private ?\DateTimeInterface $dateModified = null;
 
     private ?UploadedFile $posterFile = null;
+
     private ?UploadedFile $backdropFile = null;
 
     public function getId(): ?int

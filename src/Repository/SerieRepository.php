@@ -60,7 +60,7 @@ class SerieRepository extends ServiceEntityRepository
 //        $queryBuilder->andWhere('s.vote > 8');
         $queryBuilder->orderBy('s.popularity', 'DESC');
         $query = $queryBuilder->getQuery();
-//        $query->setMaxResults(300);
+        $query->setMaxResults(50);
         $results = $query->getResult();
 
         return $results;
