@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\SerieRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 #[ORM\Entity(repositoryClass: SerieRepository::class)]
 class Serie
@@ -52,6 +53,9 @@ class Serie
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $dateModified = null;
+
+    private ?UploadedFile $posterFile = null;
+    private ?UploadedFile $backdropFile = null;
 
     public function getId(): ?int
     {
@@ -166,6 +170,16 @@ class Serie
         return $this;
     }
 
+    public function setBackdropFile(?UploadedFile $backdropFile = null): void
+    {
+        $this->backdropFile = $backdropFile;
+    }
+
+    public function getBackdropFile(): ?UploadedFile
+    {
+        return $this->backdropFile;
+    }
+
     public function getPoster(): ?string
     {
         return $this->poster;
@@ -176,6 +190,16 @@ class Serie
         $this->poster = $poster;
 
         return $this;
+    }
+
+    public function setPosterFile(?UploadedFile $posterFile = null): void
+    {
+        $this->posterFile = $posterFile;
+    }
+
+    public function getPosterFile(): ?UploadedFile
+    {
+        return $this->posterFile;
     }
 
     public function getTmdbId(): ?int

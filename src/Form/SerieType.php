@@ -6,6 +6,7 @@ use App\Entity\Serie;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -38,8 +39,14 @@ class SerieType extends AbstractType
                 'widget' => 'single_text'
             ])
             ->add('lastAirDate')
-            ->add('backdrop')
-            ->add('poster')
+            ->add('backdropFile', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+            ])
+            ->add('posterFile', FileType::class, [
+                'required' => false,
+                'mapped' => false,
+            ])
             ->add('tmdbId')
         ;
     }

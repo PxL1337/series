@@ -5,8 +5,9 @@ namespace App\Controller;
 use App\Entity\Serie;
 use App\Form\SerieType;
 use App\Repository\SerieRepository;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,16 +17,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class SerieController extends AbstractController
 {
     #[Route('/', name: 'list')]
-    public function list(SerieRepository $serieRepository): Response
+    public function list(SerieRepository $serieRepository, Request $request): Response
     {
-        /*$series = $serieRepository->findAll();*/
-
         $series = $serieRepository->findBestSeries();
 
         return $this->render('series/list.html.twig', [
             'series' => $series,
         ]);
     }
+
 
     #[Route('/details/{id}', name: 'details')]
     public function details(int $id, SerieRepository $serieRepository): Response
@@ -38,12 +38,66 @@ class SerieController extends AbstractController
     }
 
     #[Route('/create', name: 'create')]
-    public function create(): Response
+    public function create(
+        Request $request,
+        EntityManagerInterface $entityManager
+    ): Response
     {
         $serie = new Serie();
+        $serie->setDateCreated(new \DateTime());
+
         $serieForm = $this->createForm(SerieType::class, $serie);
 
-        //traiter le formulaire
+        $serieForm->handleRequest($request);
+
+        if ($serieForm->isSubmitted() && $serieForm->isValid()) {
+            // Handle the upload for the poster file
+            if ($posterFile = $serieForm->get('posterFile')->getData()) {
+                $originalFilename = pathinfo($posterFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$posterFile->guessExtension();
+                try {
+                    $posterFile->move(
+                        $this->getParameter('posters_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Unable to upload the poster file, add a flash message
+                    $this->addFlash('error', 'Unable to upload poster file: '.$e->getMessage());
+
+                    return $this->render('series/create.html.twig', [
+                        'serieForm' => $serieForm->createView()
+                    ]);
+                }
+                $serie->setPoster($newFilename);
+            }
+
+            // Handle the upload for the backdrop file
+            if ($backdropFile = $serieForm->get('backdropFile')->getData()) {
+                $originalFilename = pathinfo($backdropFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$backdropFile->guessExtension();
+                try {
+                    $backdropFile->move(
+                        $this->getParameter('backdrops_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Unable to upload the backdrop file, add a flash message
+                    $this->addFlash('error', 'Unable to upload backdrop file: '.$e->getMessage());
+
+                    return $this->render('series/create.html.twig', [
+                        'serieForm' => $serieForm->createView()
+                    ]);
+                }
+                $serie->setBackdrop($newFilename);
+            }
+            $entityManager->persist($serie);
+            $entityManager->flush();
+
+            $this->addFlash('success', 'Serie added! Good Job !');
+
+            return $this->redirectToRoute('series_details', ['id'=>$serie->getId()]);
+        }
+
 
         return $this->render('series/create.html.twig', [
             'serieForm' => $serieForm->createView()

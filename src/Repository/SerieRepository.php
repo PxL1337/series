@@ -56,18 +56,14 @@ class SerieRepository extends ServiceEntityRepository
 
         //version QueryBuilder
         $queryBuilder = $this->createQueryBuilder('s');
-        $queryBuilder->andWhere('s.popularity > 100');
-        $queryBuilder->andWhere('s.vote > 8');
+//        $queryBuilder->andWhere('s.popularity > 50');
+//        $queryBuilder->andWhere('s.vote > 8');
         $queryBuilder->orderBy('s.popularity', 'DESC');
-
         $query = $queryBuilder->getQuery();
-        $query->setMaxResults(50);
+//        $query->setMaxResults(300);
         $results = $query->getResult();
 
         return $results;
-
-
-
     }
 
 //    /**

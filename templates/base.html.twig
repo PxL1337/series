@@ -20,17 +20,28 @@
             {% include('inc/nav.html.twig') %}
         </header>
 
+        {# read and display all flash messages #}
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="flash flash-{{ label }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+
         <main>
             {%  block body %}{% endblock %}
         </main>
 
-        <footer>
+        <footer class="footer">
             <div class="copyright">&copy; {{ "now"|date("Y") }} PixDev | <a href="https://www.eni-ecole.fr/">@ENI-Ecole Informatique</a> |
                 <a href="https://github.com/PxL1337/series" target="_blank"><i class="fa-brands fa-github"></i></a></div>
         </footer>
     </div>
-    <script src="https://kit.fontawesome.com/bd77a4e8ae.js" crossorigin="anonymous"></script>
+
     {% block javascripts %}
+        <script src="https://kit.fontawesome.com/bd77a4e8ae.js" crossorigin="anonymous"></script>
         <script src="{{ asset('js/zoom.js') }}"></script>
     {% endblock %}
 </body>

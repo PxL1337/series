@@ -63,21 +63,44 @@ nav li {
     margin-right: 1rem;
 }
 
+
+.flash {
+    padding: 20px;
+    font-weight: bold;
+    font-size: 1.4em;
+    margin: 1em;
+    border-radius: 5px;
+}
+
+.flash-success {
+    background-color: darkseagreen;
+}
+
 /* Series Details */
+
+
+.series-list {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+}
+
+.series-list article {
+    transition: transform 0.3s ease, opacity 0.3s ease, z-index 0s 0.3s;  /* Delay the z-index transition */
+    z-index: 1;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+
 .serie-details {
     display: flex;
     justify-content: space-between;
 }
 
-.series-list {
-    display: grid;
-    grid-gap: 25px;
-    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-}
-
-.series-list article {
-    transition: transform 0.3s ease;
-    z-index: 1;
+.title-image {
+    max-width: 342px;
+    max-height: 517px;
 }
 
 .serie-infos {
