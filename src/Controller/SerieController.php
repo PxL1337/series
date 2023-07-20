@@ -104,6 +104,26 @@ class SerieController extends AbstractController
         ]);
     }
 
+    #[Route('/more', name: 'more')]
+    public function more(SerieRepository $serieRepository, Request $request): Response
+    {
+        $offset = $request->query->get('offset', 0);
+        $series = $serieRepository->findBestSeries($offset);
+
+        // Transform the series to JSON and return
+        $response = [];
+        foreach ($series as $serie) {
+            $response[] = [
+                'id' => $serie->getId(),
+                'name' => $serie->getName(),
+                'poster' => $serie->getPoster(),
+                // Add any other fields you want to include
+            ];
+        }
+
+        return $this->json($response);
+    }
+
     #[Route('/demo', name: 'em-demo')]
     public function demo(EntityManagerInterface $entityManager): Response
     {

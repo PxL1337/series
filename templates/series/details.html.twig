@@ -30,5 +30,15 @@
     </section>
 {% endblock %}
 
+{% block extrastyles %}
+    <style>
+        body {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(19, 33, 53, 0.9)), url("{{ asset('img/backdrops/' ~ serie.backdrop) }}") no-repeat center;
+            background-size: cover;
+            font-family: 'Tektur', cursive;
+        }
+    </style>
+{% endblock %}
+
 
 
