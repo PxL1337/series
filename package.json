@@ -1,5 +1,16 @@
 {
+  "scripts": {
+    "dev": "encore dev",
+    "watch": "encore dev --watch",
+    "build": "encore production"
+  },
   "dependencies": {
+    "core-js": "^3.31.1",
     "infinite-scroll": "^4.0.1"
+  },
+  "devDependencies": {
+    "@symfony/stimulus-bridge": "^3.2.2",
+    "@symfony/webpack-encore": "^4.4.0",
+    "webpack-notifier": "^1.15.0"
   }
 }

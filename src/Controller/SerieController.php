@@ -105,23 +105,22 @@ class SerieController extends AbstractController
     }
 
     #[Route('/more', name: 'more')]
-    public function more(SerieRepository $serieRepository, Request $request): Response
+    public function more(Request $request, SerieRepository $serieRepository): Response
     {
         $offset = $request->query->get('offset', 0);
-        $series = $serieRepository->findBestSeries($offset);
+        $series = $serieRepository->findBy([], ['popularity' => 'DESC'], 50, $offset);
 
-        // Transform the series to JSON and return
-        $response = [];
+        $seriesArray = [];
         foreach ($series as $serie) {
-            $response[] = [
+            $seriesArray[] = [
                 'id' => $serie->getId(),
                 'name' => $serie->getName(),
                 'poster' => $serie->getPoster(),
-                // Add any other fields you want to include
+                // Add more fields as necessary
             ];
         }
 
-        return $this->json($response);
+        return $this->json($seriesArray);
     }
 
     #[Route('/demo', name: 'em-demo')]
