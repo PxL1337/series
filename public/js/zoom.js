@@ -15,7 +15,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 
         // Add zoom effect when image is hovered over
         zoomable.addEventListener('mouseover', function() {
-            this.style.transform = 'scale3d(1.2, 1.2, 1.2)';
+            this.style.transform = 'scale3d(1.15, 1.15, 1.15)';
             this.style.zIndex = '2';
         });
 
@@ -40,8 +40,10 @@ window.addEventListener('DOMContentLoaded', (event) => {
                         article.classList.add('zoomable');
                         const link = document.createElement('a');
                         link.href = '/series/details/' + serie.id;
+                        link.title = 'View serie\'s details | ' + serie.seasons + ' seasons';
                         const img = document.createElement('img');
                         img.src = '/img/posters/series/' + serie.poster;
+                        img.alt = serie.name;
                         link.appendChild(img);
                         article.appendChild(link);
                         document.querySelector('.series-list').appendChild(article);
@@ -80,4 +82,9 @@ window.addEventListener('DOMContentLoaded', (event) => {
                 });
         }
     });
+
+    window.onbeforeunload = function () {
+        window.scrollTo(0, 0);
+    }
+
 });

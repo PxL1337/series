@@ -143,17 +143,21 @@ form {
     align-items: center;
 }
 
-form #serie {
+form #serie, form #season {
     width: 70%;
     align-items: center;
 }
 
-#serie div {
+form button {
+    margin-top: 20px;
+}
+
+#serie div, #season div {
     margin-bottom: 1rem;
     box-sizing: border-box;
 }
 
-#serie li {
+#serie li, #season li {
     list-style: none;
     padding-left: 10px;
     border-radius: 10px;

@@ -26,6 +26,25 @@ class SerieController extends AbstractController
         ]);
     }
 
+    #[Route('/more', name: 'more')]
+    public function more(Request $request, SerieRepository $serieRepository): Response
+    {
+        $offset = $request->query->get('offset', 0);
+        $series = $serieRepository->findBy([], ['popularity' => 'DESC'], 50, $offset);
+
+        $seriesArray = [];
+        foreach ($series as $serie) {
+            $seriesArray[] = [
+                'id' => $serie->getId(),
+                'name' => $serie->getName(),
+                'poster' => $serie->getPoster(),
+                'seasons' => count($serie->getSeasons()),
+            ];
+        }
+
+        return $this->json($seriesArray);
+    }
+
 
     #[Route('/details/{id}', name: 'details')]
     public function details(int $id, SerieRepository $serieRepository): Response
@@ -102,25 +121,6 @@ class SerieController extends AbstractController
         return $this->render('series/create.html.twig', [
             'serieForm' => $serieForm->createView()
         ]);
-    }
-
-    #[Route('/more', name: 'more')]
-    public function more(Request $request, SerieRepository $serieRepository): Response
-    {
-        $offset = $request->query->get('offset', 0);
-        $series = $serieRepository->findBy([], ['popularity' => 'DESC'], 50, $offset);
-
-        $seriesArray = [];
-        foreach ($series as $serie) {
-            $seriesArray[] = [
-                'id' => $serie->getId(),
-                'name' => $serie->getName(),
-                'poster' => $serie->getPoster(),
-                // Add more fields as necessary
-            ];
-        }
-
-        return $this->json($seriesArray);
     }
 
     #[Route('/demo', name: 'em-demo')]
